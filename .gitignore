@@ -1,0 +1,15 @@
+node_modules
+.next
+out
+.env*
+!.env.example
+.vercel
+*.log
+coverage
+.DS_Store
+
+*.tsbuildinfo
+
+# Generated performance reports
+artifacts/
+.lighthouseci/

@@ -1,0 +1,35 @@
+/* DesignLens application tokens. Keep visual values centralized here when creating new components. */
+:root {
+  color-scheme: dark;
+  --dl-bg: #0a0a0f;
+  --dl-bg-elevated: #101017;
+  --dl-surface: #14141d;
+  --dl-surface-raised: #1b1b27;
+  --dl-text: #f3f2f8;
+  --dl-text-soft: #c2c0d0;
+  --dl-muted: #868397;
+  --dl-violet: #9481ff;
+  --dl-cyan: #46d8e5;
+  --dl-amber: #f3b765;
+  --dl-border: rgba(196, 191, 230, .13);
+  --dl-radius-sm: 6px;
+  --dl-radius-md: 10px;
+  --dl-radius-lg: 18px;
+  --dl-ease: cubic-bezier(.2, .7, .2, 1);
+  --dl-shadow-glow: 0 0 38px rgba(124, 98, 241, .12);
+}
+:root[data-theme='light'] {
+  color-scheme: light;
+  --dl-bg: #f5f3f0;
+  --dl-bg-elevated: #fcfbf9;
+  --dl-surface: #ffffff;
+  --dl-surface-raised: #f0edf5;
+  --dl-text: #17151f;
+  --dl-text-soft: #484455;
+  --dl-muted: #777184;
+  --dl-violet: #6953d7;
+  --dl-cyan: #147f8b;
+  --dl-amber: #a75d11;
+  --dl-border: rgba(51, 41, 83, .14);
+  --dl-shadow-glow: 0 0 38px rgba(105, 83, 215, .08);
+}
