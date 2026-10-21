@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-const canonical = new URL(process.env.SITE_URL || 'https://designlens.app');
+const canonical = new URL(process.env.SITE_URL || 'https://design-lens-tayw.vercel.app');
 if (process.env.NODE_ENV === 'production') canonical.protocol = 'https:';
 const previewHosts = new Set(['localhost', '127.0.0.1', '::1']);
 

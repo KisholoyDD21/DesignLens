@@ -2,7 +2,7 @@ import type { Metadata, Viewport } from 'next';
 import CookieConsent from '@/components/cookie-consent';
 import './globals.css';
 
-const siteOrigin = new URL(process.env.SITE_URL || 'https://designlens.app');
+const siteOrigin = new URL(process.env.SITE_URL || 'https://design-lens-tayw.vercel.app');
 if (process.env.NODE_ENV === 'production') siteOrigin.protocol = 'https:';
 const siteUrl = siteOrigin.origin.replace(/\/$/, '');
 

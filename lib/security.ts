@@ -41,7 +41,7 @@ async function safeRobotsFetch(url: URL) {
   let current = new URL('/robots.txt', url.origin);
   for (let i = 0; i < 4; i++) {
     await assertPublicHttpUrl(current.toString());
-    const response = await fetch(current, { method: 'GET', redirect: 'manual', signal: AbortSignal.timeout(3500), headers: { 'user-agent': 'DesignLensBot/1.0 (+https://designlens.app/bot)' } });
+    const response = await fetch(current, { method: 'GET', redirect: 'manual', signal: AbortSignal.timeout(3500), headers: { 'user-agent': 'DesignLensBot/1.0 (+https://design-lens-tayw.vercel.app/bot)' } });
     if ([301, 302, 303, 307, 308].includes(response.status)) {
       const location = response.headers.get('location');
       if (!location) return null;

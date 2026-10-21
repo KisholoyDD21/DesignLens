@@ -4,7 +4,7 @@ export const runtime = 'edge';
 export const alt = 'DesignLens — turn any website into a design system';
 export const size = { width: 1200, height: 630 };
 export const contentType = 'image/png';
-const siteHost = (process.env.SITE_URL || 'https://designlens.app').replace(/^https?:\/\//, '').split('/')[0].toUpperCase();
+const siteHost = (process.env.SITE_URL || 'https://design-lens-tayw.vercel.app').replace(/^https?:\/\//, '').split('/')[0].toUpperCase();
 
 export default function OpenGraphImage() {
   return new ImageResponse(<div style={{ width: '100%', height: '100%', display: 'flex', position: 'relative', overflow: 'hidden', background: '#0A0A0F', color: '#F4F2FA', padding: '68px', fontFamily: 'Arial, sans-serif' }}>
