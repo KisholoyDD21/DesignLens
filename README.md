@@ -62,9 +62,12 @@
 - Neo-brutalist / glass-inspired landing page with animated hero, cursor spotlight, subtle ambient gradients, and dark/light theme parity.
 - Headless browser pipeline for public pages, with DOM/computed-style sampling, CSS variable and rule parsing, screenshot sampling, and explanatory confidence notes.
 - Twelve-section Markdown report, live token visualizer, copyable color swatches, scroll-aware document navigation, and downloadable `.md` or `.zip` (`design.md`, `tokens.json`, optional screenshot).
+- Persistent user workspace: signed-in users can save design systems to their account, search/filter saved reports, pin favorites, and access their library across devices.
+- Production-grade authentication with Supabase Auth: email/password with strength meter, Google & GitHub OAuth, email verification, password recovery, and Row Level Security data isolation.
+- Guest analysis preservation: visitors can analyze any public website without an account.
 - Screenshot-only fallback: if a page blocks access, provide a PNG, JPEG, or WebP screenshot (up to 3 MB). This mode makes no network requests and explicitly labels typography/layout/behavior that cannot be verified from pixels.
 - `⌘K` / `Ctrl+K` command palette, compare mode, visual restyling lens, share-as-image card, reduced-motion support, and keyboard-accessible controls.
-- Ephemeral in-memory analysis/cache state; no database or account system. Cache is keyed by normalized URL for 24 hours while the server process remains alive.
+- Ephemeral in-memory analysis/cache state for guests; persistent PostgreSQL storage with RLS for authenticated workspaces.
 - Privacy and terms routes, a custom 404, canonical metadata, a generated Open Graph social image, SVG favicon, sitemap.xml, and a generated robots.txt.
 - HTTPS and canonical-host redirects, HSTS/security headers, and explicit 301 redirects for legacy paths.
 - Cookie/analytics consent: optional Google Analytics only loads after opt-in. Report UUID paths are excluded from analytics page views.
@@ -100,14 +103,18 @@ If Playwright cannot discover Chromium locally, point `PLAYWRIGHT_EXECUTABLE_PAT
 
 | Variable | Required | Description |
 |---|---:|---|
+| `NEXT_PUBLIC_SUPABASE_URL` | Required for accounts | Supabase project URL for authentication and workspace database. Guest analysis works without it. |
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Required for accounts | Supabase public anon key for client authentication. Guest analysis works without it. |
+| `SITE_URL` | Recommended | Final public HTTPS origin, used for canonical metadata, sitemap, robots, and redirects. Defaults to `https://designlens-p9yd.onrender.com`. |
 | `OPENAI_API_KEY` | No | Enables optional AI narrative synthesis. Without it, DesignLens uses deterministic templates. |
 | `OPENAI_MODEL` | No | Model name accepted by the configured OpenAI-compatible endpoint. |
 | `LLM_BASE_URL` | No | Base URL for a compatible API, defaulting to OpenAI's chat-completions endpoint. |
 | `ANALYZE_RATE_LIMIT` | No | In-memory analysis limit per client key, defaults to 5 requests per 10-minute window. |
 | `ANALYZE_RATE_WINDOW_MS` | No | In-memory rate-limit window in milliseconds. |
 | `PLAYWRIGHT_EXECUTABLE_PATH` | No | Optional local Chromium/Chrome executable path. |
-| `SITE_URL` | Recommended | Final public HTTPS origin, used for canonical metadata, sitemap, robots, and redirects. Defaults to `https://designlens-p9yd.onrender.com`. |
 | `NEXT_PUBLIC_GA_MEASUREMENT_ID` | No | Google Analytics 4 measurement ID (`G-…`). It is a public identifier, not a secret. Analytics is not loaded until the visitor opts in. |
+
+For detailed instructions on configuring Supabase, SQL migrations, Google/GitHub OAuth, and RLS policies, see [docs/supabase-auth-workspace.md](docs/supabase-auth-workspace.md).
 
 Do not commit `.env.local` or API keys. `OPENAI_API_KEY` and provider credentials are server-only; never expose them through a `NEXT_PUBLIC_` variable. The LLM prompt treats fetched page copy as untrusted input and asks the model not to follow instructions embedded in the website content.
 

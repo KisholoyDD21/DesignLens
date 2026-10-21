@@ -14,6 +14,13 @@ const required = [
   'app/privacy/page.tsx', 'app/terms/page.tsx', 'app/not-found.tsx', 'app/robots.ts', 'app/sitemap.ts',
   'app/opengraph-image.tsx', 'app/icon.svg', 'middleware.ts', 'components/cookie-consent.tsx',
   'components/legal-layout.tsx', 'components/cookie-settings-trigger.tsx', 'SECURITY.md', 'CONTRIBUTING.md', 'LICENSE', 'docs/production-readiness.md',
+  // Authentication & Workspace additions
+  'app/login/page.tsx', 'app/signup/page.tsx', 'app/forgot-password/page.tsx', 'app/reset-password/page.tsx',
+  'app/auth/callback/route.ts', 'app/dashboard/page.tsx', 'app/settings/page.tsx', 'app/settings/security/page.tsx',
+  'app/api/reports/route.ts', 'app/api/reports/[id]/route.ts', 'app/api/account/route.ts', 'app/api/account/delete/route.ts',
+  'lib/supabase/client.ts', 'lib/supabase/server.ts', 'lib/supabase/middleware.ts', 'lib/supabase/config.ts',
+  'lib/auth-validation.ts', 'components/user-menu.tsx', 'components/auth/auth-shell.tsx', 'components/auth/oauth-buttons.tsx',
+  'supabase/migrations/20261022000000_init_auth_and_workspace.sql'
 ];
 const missing = required.filter(file => !existsSync(join(root, file)));
 const packageJson = JSON.parse(readFileSync(join(root, 'package.json'), 'utf8'));
@@ -33,6 +40,11 @@ const checks = [
   ['Secret scanning and Lighthouse scripts are configured', typeof packageJson.scripts?.['verify:secrets'] === 'string' && typeof packageJson.scripts?.lighthouse === 'string'],
   ['HTTPS, HSTS, and permanent redirects are configured', existsSync(join(root,'middleware.ts')) && readFileSync(join(root,'middleware.ts'),'utf8').includes('NextResponse.redirect(target, 301)') && readFileSync(join(root,'next.config.ts'),'utf8').includes('Strict-Transport-Security')],
   ['Canonical, Open Graph, and Twitter metadata are present', readFileSync(join(root,'app/layout.tsx'),'utf8').includes('openGraph:') && readFileSync(join(root,'app/layout.tsx'),'utf8').includes('twitter:') && readFileSync(join(root,'app/layout.tsx'),'utf8').includes("alternates: { canonical: '/' }")],
+  // Auth & Workspace checks
+  ['Authentication routes exist (/login, /signup, /forgot-password, /reset-password)', ['app/login/page.tsx','app/signup/page.tsx','app/forgot-password/page.tsx','app/reset-password/page.tsx'].every(p => existsSync(join(root,p)))],
+  ['Workspace dashboard and settings routes exist', ['app/dashboard/page.tsx','app/settings/page.tsx','app/settings/security/page.tsx'].every(p => existsSync(join(root,p)))],
+  ['Supabase Auth integration and session middleware are configured', existsSync(join(root,'lib/supabase/server.ts')) && existsSync(join(root,'lib/supabase/client.ts')) && existsSync(join(root,'lib/supabase/middleware.ts'))],
+  ['Database schema migration with RLS policies exists', existsSync(join(root,'supabase/migrations/20261022000000_init_auth_and_workspace.sql')) && readFileSync(join(root,'supabase/migrations/20261022000000_init_auth_and_workspace.sql'),'utf8').includes('ROW LEVEL SECURITY')],
 ];
 for (const file of missing) console.error(`MISSING  ${file}`);
 for (const [label, pass] of checks) console.log(`${pass ? 'PASS' : 'FAIL'}    ${label}`);

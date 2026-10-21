@@ -9,6 +9,7 @@
     "start": "next start",
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
+    "test": "tsx --test scripts/test-auth-and-workspace.mjs",
     "postinstall": "node scripts/postinstall.mjs",
     "verify:source": "node scripts/verify-project.mjs",
     "check:links": "node scripts/check-links.mjs",
@@ -17,11 +18,14 @@
   },
   "dependencies": {
     "@sparticuz/chromium": "^153.0.0",
+    "@supabase/ssr": "^0.12.7",
+    "@supabase/supabase-js": "^2.109.0",
     "clsx": "^2.1.1",
     "css-tree": "^3.1.0",
     "culori": "^4.0.2",
     "framer-motion": "^12.23.12",
     "html-to-image": "^1.11.13",
+    "ipaddr.js": "^2.2.0",
     "jszip": "^3.10.1",
     "lucide-react": "^0.468.0",
     "next": "^15.5.28",
@@ -33,8 +37,7 @@
     "remark-gfm": "^4.0.1",
     "sharp": "^0.34.4",
     "tailwind-merge": "^3.3.1",
-    "zod": "^4.1.12",
-    "ipaddr.js": "^2.2.0"
+    "zod": "^4.1.12"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.1.14",
@@ -42,9 +45,10 @@
     "@types/react": "^19.2.2",
     "@types/react-dom": "^19.2.2",
     "autoprefixer": "^10.4.21",
-    "tailwindcss": "^4.1.14",
-    "typescript": "^5.9.3",
+    "eslint": "^8.57.1",
     "eslint-config-next": "^15.5.28",
-    "eslint": "^8.57.1"
+    "tailwindcss": "^4.1.14",
+    "tsx": "^4.23.15",
+    "typescript": "^5.9.3"
   }
 }

@@ -9,6 +9,7 @@ import AnalysisLoader from '@/components/analysis-loader';
 import CursorSpotlight from '@/components/cursor-spotlight';
 import ThemeToggle from '@/components/theme-toggle';
 import CommandPalette from '@/components/command-palette';
+import UserMenu from '@/components/user-menu';
 import { readResponseStream } from '@/lib/utils';
 import type { AnalysisResult } from '@/lib/types';
 
@@ -86,7 +87,7 @@ export default function LandingPage() {
     <header className="site-header">
       <a href="#top" className="brand-lockup" aria-label="DesignLens home"><span className="brand-mark"><span/><span/><span/><span/></span><span className="brand-word">design<span>lens</span></span><span className="brand-version">BETA / 01</span></a>
       <nav className="top-nav" aria-label="Main navigation"><a href="#features">Toolkit</a><a href="#how-it-works">How it works</a><a href="#manifesto">Manifesto</a></nav>
-      <div className="header-actions"><CommandPalette onAction={commandAction}/><ThemeToggle/><a className="header-cta" href="#url-input-wrap">Try it free <ArrowUpRight size={15}/></a></div>
+      <div className="header-actions"><CommandPalette onAction={commandAction}/><ThemeToggle/><UserMenu/></div>
     </header>
 
     <section className="hero-section" id="top">
