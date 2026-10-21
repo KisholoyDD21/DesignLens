@@ -1,6 +1,6 @@
 import type { MetadataRoute } from 'next';
 
-const siteOrigin = new URL(process.env.SITE_URL || 'https://design-lens-tayw.vercel.app');
+const siteOrigin = new URL(process.env.SITE_URL || 'https://designlens-p9yd.onrender.com');
 if (process.env.NODE_ENV === 'production') siteOrigin.protocol = 'https:';
 const SITE_URL = siteOrigin.origin.replace(/\/$/, '');
 

@@ -2,7 +2,7 @@
 
 **Turn a public website into an evidence-backed design system.** DesignLens renders a page in a headless browser, measures its visible UI and CSS, then produces a clean `design.md`, JSON design tokens, and an optional screenshot bundle.
 
-**Live app:** [design-lens-tayw.vercel.app](https://design-lens-tayw.vercel.app/)
+**Live app:** [designlens-p9yd.onrender.com](https://designlens-p9yd.onrender.com/)
 
 <p align="center">
   <img src="docs/previews/analysis-report.png" alt="DesignLens Design System Specification and Live Tokens Workspace" width="100%" />
@@ -106,7 +106,7 @@ If Playwright cannot discover Chromium locally, point `PLAYWRIGHT_EXECUTABLE_PAT
 | `ANALYZE_RATE_LIMIT` | No | In-memory analysis limit per client key, defaults to 5 requests per 10-minute window. |
 | `ANALYZE_RATE_WINDOW_MS` | No | In-memory rate-limit window in milliseconds. |
 | `PLAYWRIGHT_EXECUTABLE_PATH` | No | Optional local Chromium/Chrome executable path. |
-| `SITE_URL` | Recommended | Final public HTTPS origin, used for canonical metadata, sitemap, robots, and redirects. Defaults to `https://design-lens-tayw.vercel.app`. |
+| `SITE_URL` | Recommended | Final public HTTPS origin, used for canonical metadata, sitemap, robots, and redirects. Defaults to `https://designlens-p9yd.onrender.com`. |
 | `NEXT_PUBLIC_GA_MEASUREMENT_ID` | No | Google Analytics 4 measurement ID (`G-…`). It is a public identifier, not a secret. Analytics is not loaded until the visitor opts in. |
 
 Do not commit `.env.local` or API keys. `OPENAI_API_KEY` and provider credentials are server-only; never expose them through a `NEXT_PUBLIC_` variable. The LLM prompt treats fetched page copy as untrusted input and asks the model not to follow instructions embedded in the website content.
@@ -208,15 +208,15 @@ npm run build
 
 Use `npm run dev` then test at least: a normal static page, a JS-heavy public SPA, a robots-disallowed path, a private-IP URL (must be rejected), an inaccessible site using screenshot-only fallback, keyboard-only navigation, reduced-motion mode, dark/light switching, Markdown export, ZIP export, and a narrow mobile viewport.
 
-## Vercel deployment
+## Render deployment
 
-1. Push this folder to a GitHub repository. A CI workflow runs source checks, link/secret scans, typecheck, lint, and production build on pushes and pull requests.
-2. Import the repository into Vercel with the **Next.js** framework preset and the repository root as the Root Directory. Use `npm run build` as the Build Command and leave Output Directory unset so Vercel can deploy Next.js API routes as serverless functions. The `vercel.json` sets Next.js, clears a custom output-directory override, and configures the analysis function duration.
-3. Set `SITE_URL=https://design-lens-tayw.vercel.app` (or your final custom domain) and any optional server-side `OPENAI_API_KEY` in Project Settings. Add `NEXT_PUBLIC_GA_MEASUREMENT_ID` only when you have chosen to enable optional Google Analytics.
-4. Attach the final custom domain and confirm the hosting platform redirects HTTP to HTTPS. The included middleware handles forwarded HTTP requests and the configured canonical host; HSTS is also set.
+1. Create a Render **Web Service** from the GitHub repository and use the folder containing `package.json` as the Root Directory.
+2. Set the Build Command to `npm ci && npx playwright install --with-deps chromium && npm run build` and the Start Command to `npm run start`. Use Node.js 22 or newer.
+3. Set `SITE_URL=https://designlens-p9yd.onrender.com` (or your final custom domain) in the service environment. `OPENAI_API_KEY` is optional. Add `NEXT_PUBLIC_GA_MEASUREMENT_ID` only if enabling optional Google Analytics.
+4. Render serves the app over HTTPS; confirm the canonical host is the configured `SITE_URL`. HSTS is enabled in production.
 5. Verify the privacy/terms operator information is current, inspect `/robots.txt`, `/sitemap.xml`, `/opengraph-image`, and `/icon.svg`, then run Lighthouse against the deployment.
-6. Smoke-test `POST /api/analyze` with a public URL and confirm it returns newline-delimited JSON with `Content-Type: application/x-ndjson`. A generic Vercel 404/500 HTML page instead of NDJSON usually means the deployment is serving a static output directory rather than the Next.js server build; confirm the Root Directory, framework preset, Build Command, and unset Output Directory, then redeploy.
-7. Validate Chromium launch and bundle size in deployment logs. Browser extraction may need a dedicated worker/container with outbound network rules; application SSRF checks are not the entire network security boundary.
+6. Smoke-test `POST /api/analyze` with a public URL and confirm it returns newline-delimited JSON with `Content-Type: application/x-ndjson`. Review Render build and runtime logs if it returns a server error.
+7. Validate Chromium launch and memory usage in deployment logs. Browser extraction may need a larger service or a dedicated worker/container with outbound network rules; application SSRF checks are not the entire network security boundary.
 
 If the browser bundle exceeds provider limits, deploy the web shell/API to Vercel and run Playwright extraction in a protected worker/container with strict outbound firewall rules.
 
