@@ -94,7 +94,7 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000).
 
-If Playwright cannot discover Chromium locally, point `PLAYWRIGHT_EXECUTABLE_PATH` at an installed Chromium/Chrome executable. In Vercel/Lambda environments, the app uses `@sparticuz/chromium` automatically.
+If Playwright cannot discover Chromium locally, point `PLAYWRIGHT_EXECUTABLE_PATH` at an installed Chromium/Chrome executable. On Vercel, Lambda, and Render, the app uses the packaged `@sparticuz/chromium` binary automatically.
 
 ### Environment variables
 
@@ -211,7 +211,7 @@ Use `npm run dev` then test at least: a normal static page, a JS-heavy public SP
 ## Render deployment
 
 1. Create a Render **Web Service** from the GitHub repository and use the folder containing `package.json` as the Root Directory.
-2. Set the Build Command to `npm ci && npx playwright install --with-deps chromium && npm run build` and the Start Command to `npm run start`. Use Node.js 22 or newer.
+2. Set the Build Command to `npm ci && npm run build` and the Start Command to `npm run start`. Use Node.js 22 or newer. Render is detected at runtime and uses the packaged `@sparticuz/chromium` binary; do not rely on a Playwright browser cache created during the build.
 3. Set `SITE_URL=https://designlens-p9yd.onrender.com` (or your final custom domain) in the service environment. `OPENAI_API_KEY` is optional. Add `NEXT_PUBLIC_GA_MEASUREMENT_ID` only if enabling optional Google Analytics.
 4. Render serves the app over HTTPS; confirm the canonical host is the configured `SITE_URL`. HSTS is enabled in production.
 5. Verify the privacy/terms operator information is current, inspect `/robots.txt`, `/sitemap.xml`, `/opengraph-image`, and `/icon.svg`, then run Lighthouse against the deployment.

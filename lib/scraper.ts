@@ -10,7 +10,7 @@ import { analyzeCssSources } from './css-analysis';
 export type ProgressCallback = (stage: string, label: string, progress: number, detail?: string) => void;
 
 async function launchBrowser(): Promise<Browser> {
-  if (process.env.VERCEL || process.env.AWS_LAMBDA_FUNCTION_VERSION) {
+  if (process.env.VERCEL || process.env.AWS_LAMBDA_FUNCTION_VERSION || process.env.RENDER) {
     return playwrightChromium.launch({
       args: sparticuzChromium.args,
       executablePath: await sparticuzChromium.executablePath(),
