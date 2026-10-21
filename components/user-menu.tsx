@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { ChevronDown, FolderGit2, LogOut, Settings, Sparkles, User as UserIcon } from 'lucide-react';
+import { ChevronDown, FolderGit2, LogIn, LogOut, Settings, Sparkles } from 'lucide-react';
 import { getBrowserClientSafe } from '@/lib/supabase/client';
 import type { User } from '@supabase/supabase-js';
 
@@ -65,11 +65,12 @@ export default function UserMenu() {
   if (!user) {
     return (
       <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-        <Link href="/login" className="nav-user-pill">
-          Sign in
+        <Link href="/login" className="nav-user-pill nav-auth-link nav-sign-in" aria-label="Sign in">
+          <LogIn size={14} aria-hidden="true" />
+          <span>Sign in</span>
         </Link>
-        <Link href="/signup" className="header-cta">
-          Sign up <Sparkles size={14} />
+        <Link href="/signup" className="header-cta nav-auth-link nav-sign-up" aria-label="Sign up">
+          <span>Sign up</span> <Sparkles size={14} aria-hidden="true" />
         </Link>
       </div>
     );

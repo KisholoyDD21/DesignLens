@@ -675,6 +675,8 @@ kbd { font: 9px var(--mono); background: var(--bg-soft); border: 1px solid var(-
   .command-hint { width: 32px; padding:0; justify-content:center; }
   .command-hint span, .command-hint kbd { display:none; }
   .header-cta { padding: 9px 10px; gap: 7px; font-size: 10px; }
+  .nav-auth-link { width: 36px; height: 36px; padding: 0; justify-content: center; gap: 0; }
+  .nav-auth-link span { display: none; }
   .hero-section { width: calc(100% - 32px); padding-top: 54px; gap: 33px; min-height: auto; }
   .hero-kicker { font-size: 7px; gap: 6px; letter-spacing: .08em; flex-wrap: wrap; }
   .kicker-pill { font-size: 7px; }
